@@ -33,7 +33,8 @@ public class MaxHeapSort{
         metrics.startTimer();
 
         if (size == capacity) {
-            throw new IllegalStateException("Heap overflow");
+            expand();
+            
         }
 
         heap[size]=key;
@@ -139,35 +140,48 @@ public class MaxHeapSort{
         int l=left(i);
 
         int r=right(i);
-        
-        if(l<size && heap[l]>heap[largest]){
-            metrics.incComp();
-            metrics.incArrAcces();
-            metrics.incArrAcces();
-            largest=l;
-        }
 
-        if(r<size && heap[r]>heap[largest]){
-            metrics.incComp();
-            metrics.incArrAcces();
-            metrics.incArrAcces();
-            largest=r;
-        }
 
-        if(largest!=i){
-            int temp=heap[i];
-            heap[i]=heap[largest];
-            heap[largest]=temp;
+        while(true){
+            if(l<size && heap[l]>heap[largest]){
+                metrics.incComp();
+                metrics.incArrAcces();
+                metrics.incArrAcces();
+                largest=l;
+            }
 
+            if(r<size && heap[r]>heap[largest]){
+                metrics.incComp();
+                metrics.incArrAcces();
+                metrics.incArrAcces();
+                largest=r;
+            }
+
+           if (largest == i) {
+            break;
+            }
+
+            int temp = heap[i];
+            heap[i] = heap[largest];
+            heap[largest] = temp;
             metrics.incSwaps();
 
-            MaxHeapify(largest);
+            i = largest;
         }
-        metrics.stopTimer();
+            metrics.stopTimer();
 
     }
 
-    
+
+    public void expand(){
+        int newCap=capacity*2;
+        int [] newHeap=new int[newCap];
+        System.arraycopy(heap, 0, newHeap,0,capacity);
+        heap=newHeap;
+        capacity=newCap;
+
+    }
+
 }
 
 

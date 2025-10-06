@@ -6,7 +6,6 @@ public class CLI {
     public static void main(String[] args) {
         int n = Integer.parseInt(args[0]);
         MaxHeapSort heap = new MaxHeapSort(n);
-        heap.n = n;
 
         Random rand = new Random();
         int[] values = new int[n];
@@ -16,7 +15,7 @@ public class CLI {
             values[i] = rand.nextInt(1000);
         }
 
-        // INSERT
+        //insert
         heap.metrics.reset();
         heap.metrics.startTimer();
         for (int value : values) {
@@ -25,14 +24,14 @@ public class CLI {
         heap.metrics.stopTimer();
         heap.metrics.log("Insert", n);
 
-        // GET MAX
+        //getmax
         heap.metrics.reset();
         heap.metrics.startTimer();
         heap.getMax();
         heap.metrics.stopTimer();
         heap.metrics.log("GetMax", n);
 
-        // INCREASE KEY 
+        //increase key
         int indexToIncrease = rand.nextInt(n);
         int newValue = heap.heap[indexToIncrease] + 50;
 
@@ -42,7 +41,7 @@ public class CLI {
         heap.metrics.stopTimer();
         heap.metrics.log("IncreaseKey", n);
 
-        // EXTRACT MAX 
+        //extract max
         heap.metrics.reset();
         heap.metrics.startTimer();
         while (heap.size > 0) {
